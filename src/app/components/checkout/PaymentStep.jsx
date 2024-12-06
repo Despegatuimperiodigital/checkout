@@ -84,13 +84,12 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
           }
         ]
       };
-
       // Create order in WooCommerce
-      const consumerKey = 'ck_688c1f71bf9e218c6ecb582fde9725b3e08da3d9';
-      const consumerSecret = 'cs_f81a648e232d4467208162e18b89d8fdefbb0592';
+      const consumerKey = 'ck_c925fb15f8eb67a8b1cfcfa566e0ad96ef999175';
+      const consumerSecret = 'cs_6475b97f3cbe32fe52973680b2dcdac9eb193b39';
       const credentials = btoa(`${consumerKey}:${consumerSecret}`);
 
-      const response = await fetch('https://www.cruzeirogomas.cl/wp-json/wc/v3/orders', {
+      const response = await fetch('https://www.decohaus.cl/wp-json/wc/v3/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -144,7 +143,7 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
         {paymentMethods.map((method) => (
           <div
             key={method.id}
-            className={`border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === method.id ? 'border-[#5da872] bg-[#f0f9f2]' : 'border-gray-200'
+            className={`border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === method.id ? 'border-[#c69393] bg-[#f0f9f2]' : 'border-gray-200'
               }`}
             onClick={() => setPaymentMethod(method.id)}
           >
@@ -155,7 +154,7 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
                 value={method.id}
                 checked={paymentMethod === method.id}
                 onChange={() => setPaymentMethod(method.id)}
-                className="text-[#5da872] focus:ring-[#5da872]"
+                className="text-[#c69393] focus:ring-[#c69393]"
               />
               <div>
                 <h3 className="font-medium text-[#222222]">{method.name}</h3>
@@ -173,7 +172,7 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
         transition={{ duration: 0.3 }}
         className="bg-[#353535] p-6 rounded-lg space-y-4"
       >
-        <h3 className="text-[#5da872] font-semibold text-lg mb-4">Confirma tus datos antes de proceder al pago:</h3>
+        <h3 className="text-[#c69393] font-semibold text-lg mb-4">Confirma tus datos antes de proceder al pago:</h3>
         <div className="space-y-2 text-[#ffffff]">
           <p><strong>Nombre:</strong> {orderData.personalInfo.name}</p>
           <p><strong>Email:</strong> {orderData.email}</p>
@@ -186,7 +185,7 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
         <button
           onClick={handleSubmit}
           disabled={isProcessing}
-          className="w-full bg-[#5da872] text-white px-4 py-2 rounded-lg hover:bg-[#4c9660] transition-colors mt-4 disabled:opacity-50"
+          className="w-full bg-[#c69393] text-white px-4 py-2 rounded-lg hover:bg-[#4c9660] transition-colors mt-4 disabled:opacity-50"
         >
           {isProcessing ? 'Procesando...' : 'Confirmar y proceder al pago'}
         </button>
@@ -205,7 +204,7 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
           whileTap={{ scale: 0.95 }}
           type="button"
           onClick={prevStep}
-          className="px-6 py-3 bg-[#397e4c] text-[#ffffff] rounded-lg hover:bg-[#5da872] disabled:opacity-50"
+          className="px-6 py-3 bg-[#397e4c] text-[#ffffff] rounded-lg hover:bg-[#c69393] disabled:opacity-50"
           disabled={isProcessing}
         >
           Revisar envío
@@ -218,7 +217,7 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
         transition={{ delay: 0.4, duration: 0.5 }}
         className="bg-[#353535] p-4 rounded-lg mt-6"
       >
-        <div className="flex items-center space-x-2 text-[#5da872]">
+        <div className="flex items-center space-x-2 text-[#c69393]">
           <AlertCircle className="w-5 h-5" />
           <h3 className="font-semibold">Pago Seguro</h3>
         </div>

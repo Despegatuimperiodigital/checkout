@@ -71,13 +71,13 @@ export default function EmailStep({ nextStep, updateOrderData, initialEmail }) {
       </div>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-2 text-[#397e4c]">
+          <label htmlFor="email" className="block text-sm font-medium mb-2 text-[#c69393]">
             Correo electrónico
           </label>
           <input
             type="email"
             id="email"
-            className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+            className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -85,14 +85,14 @@ export default function EmailStep({ nextStep, updateOrderData, initialEmail }) {
           />
         </div>
         <div className="space-y-4">
-          <p className="text-[#5da872] font-semibold text-sm">
+          <p className="text-[#c69393] font-semibold text-sm">
             ¡Obtén acceso exclusivo a ofertas y novedades!
           </p>
           <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: '#5da872' }}
+            whileHover={{ scale: 1.05, backgroundColor: '#c69393' }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="w-full bg-[#397e4c] text-[#ffffff] py-3 rounded-lg transition-colors duration-300 flex items-center justify-center space-x-2"
+            className="w-full bg-[#c69393] text-[#ffffff] py-3 rounded-lg transition-colors duration-300 flex items-center justify-center space-x-2"
           >
             <span className="font-bold text-lg">Pasar a caja</span>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

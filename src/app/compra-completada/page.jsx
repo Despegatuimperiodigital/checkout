@@ -4,43 +4,75 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PurchaseConfirmation from './PurchaseConfirmation';
 import PurchaseDetails from './PurchaseDetails';
+import { fetchOrderData  } from '../../hooks/orderApi';
+
+// Función para extraer el ID y la key de la URL
+function getOrderParams() {
+  if (typeof window === 'undefined') return { orderId: null, orderKey: null };
+  fetchOrderData();
+  const pathname = window.location.search;
+  const searchParams = new URLSearchParams(window.location.search);
+  console.log(window.location.search)
+  // Extraer orderId del path /order-received/13921/
+  const orderIdMatch = pathname.match(/order-received\/(\d+)/);
+  console.log(orderIdMatch)
+  const orderId = orderIdMatch ? orderIdMatch[1] : null;
+  console.log(orderId)
+  // Extraer key del query parameter
+  const orderKey = searchParams.get('key');
+  
+  return { orderId, orderKey };
+}
+
+
 
 export default function CompraCompletada() {
   const [orderData, setOrderData] = useState(null);
   const [step, setStep] = useState(1);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // En una aplicación real, aquí obtendrías los datos de la orden desde el servidor
-    const exampleOrderData = {
-      orderNumber: '885078',
-      personalInfo: { name: 'Juan Pérez' },
-      shipping: { 
-        address: 'Calle Ejemplo 123', 
-        commune: 'Santiago', 
-        cost: 5000 
-      },
-      payment: { 
-        method: 'credit_card', 
-        number: '************1234' 
-      },
-      cartTotal: 75000,
-      items: [
-        { name: 'Producto 1', quantity: 2, price: 19990 },
-        { name: 'Producto 2', quantity: 1, price: 24990 },
-      ]
+    const { orderId, orderKey } = getOrderParams();
+    
+    if (!orderId || !orderKey) {
+      setError('Información de orden no válida');
+      return;
+    }
+
+    const loadOrder = async () => {
+      try {
+        const data = await fetchOrderData(orderId, orderKey);
+        setOrderData(data);
+        
+        // Cambiar al paso de detalles después de 3 segundos
+        setTimeout(() => {
+          setStep(2);
+        }, 3000);
+      } catch (err) {
+        setError(err.message);
+      }
     };
-    setOrderData(exampleOrderData);
 
-    // Mostrar el segundo paso después de 3 segundos
-    const timer = setTimeout(() => {
-      setStep(2);
-    }, 3000);
-
-    return () => clearTimeout(timer);
+    loadOrder();
   }, []);
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#397e4c] to-[#5da872] py-12 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
+          <p className="text-gray-700">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!orderData) {
-    return <div>Cargando...</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#397e4c] to-[#5da872] py-12 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white"></div>
+      </div>
+    );
   }
 
   return (
@@ -73,4 +105,3 @@ export default function CompraCompletada() {
     </div>
   );
 }
-

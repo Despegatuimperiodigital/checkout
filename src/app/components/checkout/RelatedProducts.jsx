@@ -59,8 +59,8 @@
 //   }, []);
 //
 //   return (
-//     <div className="bg-[#353535] backdrop-blur-lg rounded-lg shadow-md p-4 text-[#ffffff]">
-//       <h3 className="text-xl font-bold mb-4 text-[#5da872] text-center flex items-center justify-center">
+//     <div className="bg-[#9d9d9d] backdrop-blur-lg rounded-lg shadow-md p-4 text-[#ffffff]">
+//       <h3 className="text-xl font-bold mb-4 text-[#c69393] text-center flex items-center justify-center">
 //         <span className="mr-2">
 //           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
 //             <path fillRule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clipRule="evenodd" />
@@ -83,7 +83,7 @@
 //               alt={relatedProducts[currentIndex].name}
 //               className="w-32 h-32 object-cover rounded-lg mb-2"
 //             />
-//             <h4 className="text-md font-medium text-[#5da872] mb-1 text-center">
+//             <h4 className="text-md font-medium text-[#c69393] mb-1 text-center">
 //               {relatedProducts[currentIndex].name}
 //             </h4>
 //             <p className="text-lg font-bold mb-1">
@@ -99,7 +99,7 @@
 //             <motion.button
 //               whileHover={{ scale: 1.05 }}
 //               whileTap={{ scale: 0.95 }}
-//               className="bg-[#5da872] text-[#ffffff] px-4 py-2 rounded-full font-medium text-sm flex items-center"
+//               className="bg-[#c69393] text-[#ffffff] px-4 py-2 rounded-full font-medium text-sm flex items-center"
 //             >
 //               <ShoppingCart className="mr-2" size={16} />
 //               Agregar al carrito
@@ -108,13 +108,13 @@
 //         </AnimatePresence>
 //         <button
 //           onClick={prevProduct}
-//           className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#5da872] text-[#ffffff] p-1 rounded-full opacity-50 hover:opacity-100 transition-opacity"
+//           className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#c69393] text-[#ffffff] p-1 rounded-full opacity-50 hover:opacity-100 transition-opacity"
 //         >
 //           <ChevronLeft size={20} />
 //         </button>
 //         <button
 //           onClick={nextProduct}
-//           className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#5da872] text-[#ffffff] p-1 rounded-full opacity-50 hover:opacity-100 transition-opacity"
+//           className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#c69393] text-[#ffffff] p-1 rounded-full opacity-50 hover:opacity-100 transition-opacity"
 //         >
 //           <ChevronRight size={20} />
 //         </button>
@@ -123,7 +123,7 @@
 //         <p className="text-xs text-gray-300">
 //           Los clientes que compraron este producto también adquirieron:
 //         </p>
-//         <p className="text-sm text-[#5da872] font-medium mt-1">
+//         <p className="text-sm text-[#c69393] font-medium mt-1">
 //           {relatedProducts[(currentIndex + 1) % relatedProducts.length].name}
 //         </p>
 //       </div>

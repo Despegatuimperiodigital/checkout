@@ -51,7 +51,7 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
           {['personal', 'business'].map((type) => (
             <motion.label
               key={type}
-              className={`flex flex-col items-center justify-center p-4 rounded-lg cursor-pointer transition-all ${personalInfo.type === type ? 'bg-[#5da872] text-white' : 'bg-white text-[#397e4c] border-2 border-[#397e4c]'
+              className={`flex flex-col items-center justify-center p-4 rounded-lg cursor-pointer transition-all ${personalInfo.type === type ? 'bg-[#c69393] text-white' : 'bg-white text-[#c69393] border-2 border-[#c69393]'
                 }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -65,7 +65,7 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
                 onChange={(e) => setPersonalInfo({ ...personalInfo, type: e.target.value })}
               />
               <motion.div
-                className={`w-16 h-16 mb-2 flex items-center justify-center rounded-full ${personalInfo.type === type ? 'bg-white text-[#5da872]' : 'bg-[#5da872] text-white'
+                className={`w-16 h-16 mb-2 flex items-center justify-center rounded-full ${personalInfo.type === type ? 'bg-white text-[#c69393]' : 'bg-[#c69393] text-white'
                   }`}
 
                 transition={{ duration: 0.5 }}
@@ -91,7 +91,7 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
               transition={{ duration: 0.5 }}
-              className="bg-gradient-to-r from-[#397e4c] to-[#5da872] text-white p-6 rounded-lg mt-6 shadow-lg relative overflow-hidden"
+              className="bg-gradient-to-r from-[#c69393] to-[#c69393] text-white p-6 rounded-lg mt-6 shadow-lg relative overflow-hidden"
             >
               <motion.div
                 className="absolute inset-0 bg-white opacity-10"
@@ -127,7 +127,7 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-white text-[#397e4c] px-4 py-2 rounded-full font-semibold flex items-center justify-center mx-auto"
+                  className="bg-white text-[#c69393] px-4 py-2 rounded-full font-semibold flex items-center justify-center mx-auto"
                 >
                   <span>Ver productos recomendados</span>
                   <ArrowRight className="ml-2" size={16} />
@@ -143,13 +143,13 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
           <>
         
             <div>
-              <label htmlFor="rut" className="block text-sm font-medium mb-2 text-[#397e4c]">
+              <label htmlFor="rut" className="block text-sm font-medium mb-2 text-[#c69393]">
                 RUT (para tu boleta)
               </label>
               <input
                 type="text"
                 id="rut"
-                className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+                className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
                 value={personalInfo.rut}
                 onChange={(e) => setPersonalInfo({ ...personalInfo, rut: e.target.value })}
                 required
@@ -163,26 +163,26 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
         ) : (
           <>
             <div>
-              <label htmlFor="businessName" className="block text-sm font-medium mb-2 text-[#397e4c]">
+              <label htmlFor="businessName" className="block text-sm font-medium mb-2 text-[#c69393]">
                 Razón Social
               </label>
               <input
                 type="text"
                 id="businessName"
-                className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+                className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
                 value={personalInfo.businessName}
                 onChange={(e) => setPersonalInfo({ ...personalInfo, businessName: e.target.value })}
                 required
               />
             </div>
             <div>
-              <label htmlFor="businessRut" className="block text-sm font-medium mb-2 text-[#397e4c]">
+              <label htmlFor="businessRut" className="block text-sm font-medium mb-2 text-[#c69393]">
                 RUT Empresa
               </label>
               <input
                 type="text"
                 id="businessRut"
-                className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+                className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
                 value={personalInfo.businessRut}
                 onChange={(e) => setPersonalInfo({ ...personalInfo, businessRut: e.target.value })}
                 required
@@ -190,13 +190,13 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
               />
             </div>
             <div>
-              <label htmlFor="businessGiro" className="block text-sm font-medium mb-2 text-[#397e4c]">
+              <label htmlFor="businessGiro" className="block text-sm font-medium mb-2 text-[#c69393]">
                 Giro de la Empresa
               </label>
               <input
                 type="text"
                 id="businessGiro"
-                className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+                className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
                 value={personalInfo.businessGiro}
                 onChange={(e) => setPersonalInfo({ ...personalInfo, businessGiro: e.target.value })}
                 required
@@ -206,13 +206,13 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
            
             <div>
           <div>
-          <label htmlFor="rut" className="block text-sm font-medium mb-2 text-[#397e4c]">
+          <label htmlFor="rut" className="block text-sm font-medium mb-2 text-[#c69393]">
                 RUT Personal
               </label>
               <input
                 type="text"
                 id="rut"
-                className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+                className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
                 value={personalInfo.rut}
                 onChange={(e) => setPersonalInfo({ ...personalInfo, rut: e.target.value })}
                 required
@@ -224,25 +224,25 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
           </>
         )}
         <div>
-          <div>    <label htmlFor="name" className="block text-sm font-medium mb-2 text-[#397e4c]">
+          <div>    <label htmlFor="name" className="block text-sm font-medium mb-2 text-[#c69393]">
             Nombre De quien Recibe
           </label>
             <input
               type="text"
               id="name"
-              className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+              className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
               value={personalInfo.name}
               onChange={(e) => setPersonalInfo({ ...personalInfo, name: e.target.value })}
               required
             />
           </div>
-          <label htmlFor="phone" className="block text-sm font-medium mb-2 mt-4 text-[#397e4c]">
+          <label htmlFor="phone" className="block text-sm font-medium mb-2 mt-4 text-[#c69393]">
             Teléfono de contacto de quien recibe
           </label>
           <input
             type="tel"
             id="phone"
-            className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+            className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
             value={personalInfo.phone}
             onChange={(e) => setPersonalInfo({ ...personalInfo, phone: e.target.value })}
             required
@@ -258,16 +258,16 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
             whileTap={{ scale: 0.95 }}
             type="button"
             onClick={prevStep}
-            className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 flex items-center"
+            className="px-6 py-3  bg-[#c69393] hover:bg-[#c69393]  bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 flex items-center"
           >
             <ArrowRight className="mr-2 rotate-180" size={16} />
-            Volver
+            Volver 
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="px-6 py-3 bg-[#397e4c] text-[#ffffff] rounded-lg hover:bg-[#5da872] flex items-center"
+            className="px-6 py-3 bg-[#c69393] text-[#ffffff] rounded-lg hover:bg-[#c69393] flex items-center"
           >
             Continuar
             <ArrowRight className="ml-2" size={16} />

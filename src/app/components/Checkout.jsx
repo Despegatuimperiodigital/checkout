@@ -64,9 +64,9 @@ export default function Checkout() {
       <div className="max-w-6xl mx-auto px-4">
       <div className="flex items-center justify-center mb-4">
   <img 
-    src="https://www.cruzeirogomas.cl/wp-content/uploads/sites/2/2024/11/cropped-logo_cruzeirogomas_mediano_1.png"
-    alt="Cruzeiro Gomas"
-    className="h-8 w-auto object-contain"
+    src="https://www.cruzeirogomas.cl/wp-content/uploads/sites/2/2024/11/LOGO-DECOHAUS_11-.png"
+    alt="Decohaus"
+    className="h-20 w-auto object-contain"
   />
 </div>
         <AnimatePresence mode="wait">

@@ -26,7 +26,7 @@ export default function OrderSummary({ orderData, shippingCost, isPaymentStep, c
       transition={{ duration: 0.5 }}
       className="bg-[#ffffff] backdrop-blur-lg rounded-lg shadow-lg overflow-hidden"
     >
-      <div className="bg-[#5da872] text-white p-4 flex justify-between items-center cursor-pointer"
+      <div className="bg-[#c69393] text-white p-4 flex justify-between items-center cursor-pointer"
            onClick={() => setIsExpanded(!isExpanded)}>
         <h2 className="text-xl font-semibold flex items-center">
           <ShoppingBag className="mr-2" />
@@ -64,11 +64,11 @@ export default function OrderSummary({ orderData, shippingCost, isPaymentStep, c
                     <p className="text-sm text-gray-600">Precio unitario: ${item.price.toLocaleString('es-CL', { maximumFractionDigits: 0 })}</p>
                   </div>
                 </div>
-                <span className="text-[#5da872] font-bold">${(item.price * item.quantity).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</span>
+                <span className="text-[#c69393] font-bold">${(item.price * item.quantity).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</span>
               </motion.div>
             ))}
             
-            <div className="border-t border-[#5da872] mt-4 pt-4 space-y-2">
+            <div className="border-t border-[#c69393] mt-4 pt-4 space-y-2">
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>${subtotal.toLocaleString('es-CL', { maximumFractionDigits: 0 })}</span>
@@ -76,14 +76,14 @@ export default function OrderSummary({ orderData, shippingCost, isPaymentStep, c
               {shippingCost !== undefined && (
                 <div className="flex justify-between items-center">
                   <span className="flex items-center">
-                    <Truck className="mr-2 text-[#5da872]" size={18} />
+                    <Truck className="mr-2 text-[#c69393]" size={18} />
                     Envío
                   </span>
                   <span>${shipping.toLocaleString('es-CL', { maximumFractionDigits: 0 })}</span>
                 </div>
               )}
               <motion.div
-                className="flex justify-between font-bold text-lg mt-4 bg-[#5da872] text-white p-2 rounded"
+                className="flex justify-between font-bold text-lg mt-4 bg-[#c69393] text-white p-2 rounded"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -100,7 +100,7 @@ export default function OrderSummary({ orderData, shippingCost, isPaymentStep, c
       
       {!isExpanded && (
         <div className="p-4 text-center">
-          <span className="font-bold text-lg text-[#5da872]">${total.toLocaleString()}</span>
+          <span className="font-bold text-lg text-[#c69393]">${total.toLocaleString()}</span>
           <span className="text-sm text-gray-500 ml-2">({cartData.items.length} productos)</span>
         </div>
       )}

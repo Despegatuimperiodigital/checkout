@@ -296,7 +296,7 @@ const getShipitPrice = async (comuna, weight) => {
             setShowWeightPopup(false);
             console.log("Contacting executive...");
           }}
-          className="bg-[#397e4c] text-white px-4 py-2 rounded hover:bg-[#5da872] transition-colors mb-2 w-full"
+          className="bg-[#c69393] text-white px-4 py-2 rounded hover:bg-[#c69393] transition-colors mb-2 w-full"
         >
           Contactar con una ejecutiva ahora
         </button>
@@ -305,7 +305,7 @@ const getShipitPrice = async (comuna, weight) => {
             setShowWeightPopup(false);
             console.log("Proceeding to purchase verification...");
           }}
-          className="bg-[#5da872] text-white px-4 py-2 rounded hover:bg-[#397e4c] transition-colors w-full"
+          className="bg-[#c69393] text-white px-4 py-2 rounded hover:bg-[#c69393] transition-colors w-full"
         >
           Proceder a verificación de compra
         </button>
@@ -340,10 +340,10 @@ const getShipitPrice = async (comuna, weight) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-gradient-to-r from-[#353535] to-[#2a2a2a] p-6 rounded-lg mt-6 border-2 border-[#5da872] shadow-lg relative overflow-hidden"
+          className="bg-gradient-to-r from-[#333333] to-[#2a2a2a] p-6 rounded-lg mt-6 border-2 border-[#c69393] shadow-lg relative overflow-hidden"
         >
           <motion.div
-            className="absolute inset-0 bg-[#5da872] opacity-5"
+            className="absolute inset-0 bg-[#c69393] opacity-5"
             animate={{
               scale: [1, 1.2, 1],
               rotate: [0, 5, -5, 0],
@@ -354,7 +354,7 @@ const getShipitPrice = async (comuna, weight) => {
               repeatType: "reverse",
             }}
           />
-          <h3 className="font-bold text-xl mb-6 text-[#5da872] relative z-10 text-left">
+          <h3 className="font-bold text-xl mb-6 text-[#c69393] relative z-10 text-left">
   Nuestro compromiso con tu envío:
 </h3>
 <motion.ul className="space-y-4 relative z-10 ">
@@ -371,7 +371,7 @@ const getShipitPrice = async (comuna, weight) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <item.icon className="ml-3 mr-2 text-[#5da872] md:w-6 md:h-6 w-12 h-12" />
+      <item.icon className="ml-3 mr-2 text-[#c69393] md:w-6 md:h-6 w-12 h-12" />
       <span className="text-left">{item.text}</span>
       
     </motion.li>
@@ -416,13 +416,13 @@ const getShipitPrice = async (comuna, weight) => {
           {shippingDetails.type === 'delivery' && (
             <>
               <div>
-                <label htmlFor="address" className="block text-sm font-medium mb-2 text-[#397e4c]">
+                <label htmlFor="address" className="block text-sm font-medium mb-2 text-[#c69393]">
                   Dirección de entrega
                 </label>
                 <input
                   type="text"
                   id="address"
-                  className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+                  className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
                   value={shippingDetails.address}
                   onChange={(e) => setShippingDetails({
                     ...shippingDetails,
@@ -433,12 +433,12 @@ const getShipitPrice = async (comuna, weight) => {
                 />
               </div>
               <div>
-                <label htmlFor="region" className="block text-sm font-medium mb-2 text-[#397e4c]">
+                <label htmlFor="region" className="block text-sm font-medium mb-2 text-[#c69393]">
                   Región
                 </label>
                 <select
                   id="region"
-                  className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] focus:ring-2 focus:ring-[#5da872]"
+                  className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] focus:ring-2 focus:ring-[#c69393]"
                   value={shippingDetails.region}
                   onChange={(e) => {
                     const selectedRegion = regions.find(r => r.id === parseInt(e.target.value));
@@ -465,14 +465,14 @@ const getShipitPrice = async (comuna, weight) => {
                 </select>
               </div>
               <div>
-                <label htmlFor="comuna" className="block text-sm font-medium mb-2 text-[#397e4c]">
+                <label htmlFor="comuna" className="block text-sm font-medium mb-2 text-[#c69393]">
                   Comuna
                 </label>
                 {loadingComunas ? (
-                  <div className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] flex items-center justify-center">
-                    <div className="w-full bg-[#676767] rounded-full h-2">
+                  <div className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] flex items-center justify-center">
+                    <div className="w-full bg-[#9d9d9d] rounded-full h-2">
                       <div
-                        className="bg-[#5da872] h-2 rounded-full transition-all duration-500 ease-in-out"
+                        className="bg-[#c69393] h-2 rounded-full transition-all duration-500 ease-in-out"
                         style={{ width: '50%' }}
                       ></div>
                     </div>
@@ -481,7 +481,7 @@ const getShipitPrice = async (comuna, weight) => {
                 ) : (
                   <select
                     id="comuna"
-                    className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] focus:ring-2 focus:ring-[#5da872]"
+                    className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] focus:ring-2 focus:ring-[#c69393]"
                     value={shippingDetails.comuna}
                     onChange={(e) => {
                       const selectedComuna = comunas.find(c => c.id === parseInt(e.target.value));
@@ -509,12 +509,12 @@ const getShipitPrice = async (comuna, weight) => {
                 )}
               </div>
               <div>
-                <label htmlFor="additionalInfo" className="block text-sm font-medium mb-2 text-[#397e4c]">
+                <label htmlFor="additionalInfo" className="block text-sm font-medium mb-2 text-[#c69393]">
                   Información adicional para la entrega (opcional)
                 </label>
                 <textarea
                   id="additionalInfo"
-                  className="w-full p-3 border border-[#676767] rounded-lg bg-[#353535] text-[#ffffff] placeholder-[#676767] focus:ring-2 focus:ring-[#5da872]"
+                  className="w-full p-3 border border-[#9d9d9d] rounded-lg bg-[#9d9d9d] text-[#ffffff] placeholder-[#9d9d9d] focus:ring-2 focus:ring-[#c69393]"
                   value={shippingDetails.additionalInfo}
                   onChange={(e) => setShippingDetails({
                     ...shippingDetails,
@@ -536,10 +536,10 @@ const getShipitPrice = async (comuna, weight) => {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-            className="bg-gradient-to-br from-[#353535] to-[#2a2a2a] p-8 rounded-lg border-2 border-[#5da872] shadow-lg text-[#ffffff] relative overflow-hidden"
+            className="bg-gradient-to-br from-[#333333] to-[#2a2a2a] p-8 rounded-lg border-2 border-[#c69393] shadow-lg text-[#ffffff] relative overflow-hidden"
           >
             <motion.div
-              className="absolute inset-0 bg-[#5da872] opacity-5"
+              className="absolute inset-0 bg-[#c69393] opacity-5"
               animate={{
                 scale: [1, 1.1, 1],
                 rotate: [0, 5, -5, 0],
@@ -552,7 +552,7 @@ const getShipitPrice = async (comuna, weight) => {
             />
             <motion.div className="relative z-10">
               <motion.h4 
-                className="font-bold text-2xl mb-4 text-[#5da872]"
+                className="font-bold text-2xl mb-4 text-[#c69393]"
                 initial={{ x: -20 }}
                 animate={{ x: 0 }}
                 transition={{ delay: 0.2 }}
@@ -579,7 +579,7 @@ const getShipitPrice = async (comuna, weight) => {
                       Costo de envío: ${shippingCost.toLocaleString()}
                       {shippingCost === 0 && orderData.cartTotal >= shippingCosts.freeShippingThreshold && (
                         <motion.span 
-                          className="block text-[#5da872] mt-2"
+                          className="block text-[#c69393] mt-2"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
@@ -609,15 +609,15 @@ const getShipitPrice = async (comuna, weight) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1 }}
                       >
-                        <div className="w-full bg-[#676767] rounded-full h-3 mb-2 overflow-hidden">
+                        <div className="w-full bg-[#9d9d9d] rounded-full h-3 mb-2 overflow-hidden">
                           <motion.div 
-                            className="bg-[#5da872] h-3 rounded-full"
+                            className="bg-[#c69393] h-3 rounded-full"
                             initial={{ width: 0 }}
                             animate={{ width: `${(orderData.cartTotal / shippingCosts.freeShippingThreshold) * 100}%` }}
                             transition={{ duration: 1, delay: 1.2 }}
                           />
                         </div>
-                        <p className="text-sm text-[#5da872] font-medium">
+                        <p className="text-sm text-[#c69393] font-medium">
                           Te faltan ${(shippingCosts.freeShippingThreshold - orderData.cartTotal).toLocaleString()} para envío gratis
                         </p>
                       </motion.div>
@@ -657,7 +657,7 @@ const getShipitPrice = async (comuna, weight) => {
   disabled={!isFormValid()}
   className={`px-6 py-3 rounded-lg font-medium shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
     isFormValid() 
-      ? 'bg-[#397e4c] text-white hover:bg-[#2d6b3d] focus:ring-[#397e4c]/50' 
+      ? 'bg-[#c69393] text-white hover:bg-[#2d6b3d] focus:ring-[#c69393]/50' 
       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
   }`}
 >
