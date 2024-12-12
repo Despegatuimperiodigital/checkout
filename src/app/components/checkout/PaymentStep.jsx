@@ -23,7 +23,6 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
       gateway: 'woomercadopago_custom'
     }
   ];
-  console.log(orderData)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
@@ -39,84 +38,92 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
 
 
       // Prepare order data for WooCommerce
-      const wooCommerceOrderData = {
-        payment_method: selectedMethod.gateway,
-        payment_method_title: selectedMethod.name,
-        set_paid: false,
-        billing: {
-          first_name: orderData.personalInfo.name.split(' ')[0],
-          last_name: orderData.personalInfo.name.split(' ').slice(1).join(' '),
-          address_1: orderData.shipping.address,
-          city: orderData.shipping.ws_comuna_name,
-          state: orderData.shipping.ws_region_name,
-          postcode: '',
-          country: 'CL',
-          email: orderData.email,
-          phone: orderData.personalInfo.phone,
-          tipo: orderData.personalInfo.type === 'personal' ? 'Boleta' : 'Factura',
-          rut: orderData.personalInfo.rut,
-          // Nuevos campos
-          razon_social: orderData.personalInfo.businessName || '',
-          rut_empresa: orderData.personalInfo.businessRut || '',
-          giro: orderData.personalInfo.businessGiro || '',
-          personal_rut: orderData.personalInfo.rut,
-          nombre_contacto: orderData.personalInfo.name || '', // Nombre de quien recibe
-          telefono_contacto: orderData.personalInfo.phone || '', // Teléfono de quien recibe
-        },
-        shipping: {
-          first_name: orderData.personalInfo.name.split(' ')[0],
-          last_name: orderData.personalInfo.name.split(' ').slice(1).join(' '),
-          address_1: orderData.shipping.address,
-          city: orderData.shipping.ws_comuna_name,
-          state: orderData.shipping.ws_region_name,
-          postcode: '',
-          country: 'CL'
-        },
-        line_items: orderData.cartItems.map(item => ({
-          product_id: item.id,
-          quantity: item.quantity
-        })),
-        shipping_lines: [
-          {
-            method_id: orderData.shipping.id,
-            method_title: orderData.shipping.shiping_method,
-            total: orderData.shipping.shipping_cost.toString()
-          }
-        ]
-      };
-      // Create order in WooCommerce
-      const consumerKey = 'ck_c925fb15f8eb67a8b1cfcfa566e0ad96ef999175';
-      const consumerSecret = 'cs_6475b97f3cbe32fe52973680b2dcdac9eb193b39';
-      const credentials = btoa(`${consumerKey}:${consumerSecret}`);
+        const wooCommerceOrderData = {
+          payment_method: selectedMethod.gateway,
+          payment_method_title: selectedMethod.name,
+          set_paid: false,
+          billing: {
+            first_name: orderData.personalInfo.name.split(' ')[0],
+            last_name: orderData.personalInfo.name.split(' ').slice(1).join(' '),
+            address_1: orderData.shipping.address,
+            city: orderData.shipping.ws_comuna_name,
+            state: orderData.shipping.ws_region_name,
+            postcode: '',
+            country: 'CL',
+            email: orderData.email,
+            phone: orderData.personalInfo.phone,
+            tipo: orderData.personalInfo.type === 'personal' ? 'Boleta' : 'Factura',
+            rut: orderData.personalInfo.rut,
+            // Nuevos campos
+            razon_social: orderData.personalInfo.businessName || '',
+            rut_empresa: orderData.personalInfo.businessRut || '',
+            giro: orderData.personalInfo.businessGiro || '',
+            personal_rut: orderData.personalInfo.rut,
+            nombre_contacto: orderData.personalInfo.name || '', // Nombre de quien recibe
+            telefono_contacto: orderData.personalInfo.phone || '', // Teléfono de quien recibe
+          },
+          shipping: {
+            first_name: orderData.personalInfo.name.split(' ')[0],
+            last_name: orderData.personalInfo.name.split(' ').slice(1).join(' '),
+            address_1: orderData.shipping.address,
+            city: orderData.shipping.ws_comuna_name,
+            state: orderData.shipping.ws_region_name,
+            postcode: '',
+            country: 'CL'
+          },
+          line_items: orderData.cartItems.map(item => ({
+            product_id: item.id,
+            quantity: item.quantity
+          })),
+          shipping_lines: [
+            {
+              method_id: parseInt(orderData.shipping.id, 10),
+              method_title: parseInt(orderData.shipping.id, 10) === 8 
+              ? 'Envío Directo' 
+              : parseInt(orderData.shipping.id, 10) === 7 
+                ? 'Envío Starken' 
+                : 'Retiro en tienda',
+              total: orderData.shipping.shipping_cost.toString()
+            }
+          ]
+        };
 
-      const response = await fetch('https://www.decohaus.cl/wp-json/wc/v3/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${credentials}`
-        },
-        body: JSON.stringify(wooCommerceOrderData),
-      });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Error creating order: ${response.status}`);
-      }
+        console.log(wooCommerceOrderData)
+        // Create order in WooCommerce
+        
+        const consumerKey = 'ck_c925fb15f8eb67a8b1cfcfa566e0ad96ef999175';
+        const consumerSecret = 'cs_6475b97f3cbe32fe52973680b2dcdac9eb193b39';
+        const credentials = btoa(`${consumerKey}:${consumerSecret}`);
 
-      const createdOrder = await response.json();
+        const response = await fetch('https://www.decohaus.cl/wp-json/wc/v3/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${credentials}`
+          },
+          body: JSON.stringify(wooCommerceOrderData),
+        });
 
-      // Get the payment URL from the WooCommerce response
-      const paymentUrl = createdOrder.payment_url;
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error creating order: ${response.status}`);
+        }
 
-      if (!paymentUrl) {
-        throw new Error('No se pudo obtener la URL de pago');
-      }
+        const createdOrder = await response.json();
 
-      // Reemplazar checkout por finalizar-compra manteniendo los parámetros
-      const finalUrl = paymentUrl.replace('/checkout', '/finalizar-compra');
-      window.parent.location.href = finalUrl;
-
-    } catch (error) {
+        // Get the payment URL from the WooCommerce response
+        const paymentUrl = createdOrder.payment_url;
+  
+        if (!paymentUrl) {
+          throw new Error('No se pudo obtener la URL de pago');
+        }
+  
+        // Reemplazar checkout por finalizar-compra manteniendo los parámetros
+        const finalUrl = paymentUrl.replace('/checkout', '/finalizar-compra');
+        window.parent.location.href = finalUrl;
+  
+      } catch (error) {
       console.error('Error creating order:', error);
       setErrors({
         submit: error.message || 'Error al procesar la orden'

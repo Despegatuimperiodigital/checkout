@@ -1,9 +1,12 @@
+
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { shippingCosts, isWithinAmericoVespucioRing } from '../../data/shipping-costs';
 import { Package, Truck, Clock, Headphones, AlertCircle } from 'lucide-react';
+
+import PopupPeso from './PesoPopup'
 
 export default function ShippingStep({ nextStep, prevStep, updateOrderData, orderData }) {
   const [shippingDetails, setShippingDetails] = useState({
@@ -256,7 +259,7 @@ const getShipitPrice = async (comuna, weight) => {
     const shippingInfo = {
       ...shippingDetails,
       id: shippingDetails.type === 'delivery' ? 
-        (shippingDetails.shipping_method === 'shipit' ? '2' : '1') : '3', // 1: envío directo, 2: shipit, 3: retiro en tienda
+        (shippingDetails.shipping_method === 'shipit' ? '7' : '8') : '9', // 1: envío directo, 2: shipit, 3: retiro en tienda
       tipo: shippingDetails.type === 'delivery' ? 'Despacho a domicilio' : 'Retiro en tienda'
     };
   
@@ -266,51 +269,12 @@ const getShipitPrice = async (comuna, weight) => {
   };
 
   const WeightPopup = () => (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
-    >
-      <div className="bg-white p-8 rounded-lg shadow-xl max-w-md text-center relative">
-        <button
-          onClick={() => setShowWeightPopup(false)}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <AlertCircle className="mx-auto mb-4 text-yellow-500" size={48} />
-        <h3 className="text-xl font-bold mb-4">Estamos trabajando en tu cotización</h3>
-        <p className="mb-4">
-          {cartWeight > 100 
-            ? "Debido al peso de tu pedido, estamos trabajando para otorgarte precios de envío rápidos y económicos de manera personalizada."
-            : "En este momento no tenemos métodos de envío estándar disponibles para tu ubicación."}
-        </p>
-        <p className="mb-4">
-          Una ejecutiva de Cruzeiro Gomas te contactará en breve. Ya hemos recolectado tus datos y en unos minutos te escribirán.
-        </p>
-        <button
-          onClick={() => {
-            setShowWeightPopup(false);
-            console.log("Contacting executive...");
-          }}
-          className="bg-[#c69393] text-white px-4 py-2 rounded hover:bg-[#c69393] transition-colors mb-2 w-full"
-        >
-          Contactar con una ejecutiva ahora
-        </button>
-        <button
-          onClick={() => {
-            setShowWeightPopup(false);
-            console.log("Proceeding to purchase verification...");
-          }}
-          className="bg-[#c69393] text-white px-4 py-2 rounded hover:bg-[#c69393] transition-colors w-full"
-        >
-          Proceder a verificación de compra
-        </button>
-      </div>
-    </motion.div>
+   
+     <PopupPeso orderData={orderData}
+            cartWeight={cartWeight}
+            shippingDetails={shippingDetails}
+            setShowWeightPopup={setShowWeightPopup}/>
+ 
   );
 
   return (
