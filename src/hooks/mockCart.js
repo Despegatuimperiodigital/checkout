@@ -11,7 +11,7 @@ export const mockCart = {
         data: {
           name: "Neumático Ejemplo",
           price: "29900",
-          weight: "10.5",
+          weight: "100.5",
           images: {
             thumbnail: "/ejemplo-thumb.jpg",
             full: "/ejemplo-full.jpg"

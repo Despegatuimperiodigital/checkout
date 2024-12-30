@@ -40,6 +40,10 @@ export default function ShippingStep({ nextStep, prevStep, updateOrderData, orde
     "X-Shipit-Access-Token": "VuXw5Yo98WczGy3uxiyz"
   };
   const isFormValid = () => {
+    if (cartWeight > 100) {
+      return false;
+    }
+  
     if (shippingDetails.type === 'delivery') {
       // Validar que se haya seleccionado región y comuna
       if (!shippingDetails.region || !shippingDetails.comuna) {
@@ -538,53 +542,57 @@ const getShipitPrice = async (comuna, weight) => {
                   </div>
                 ) : (
                   <>
-                    <p className="font-medium text-xl text-[#ffffff]">
-                      Costo de envío: ${shippingCost.toLocaleString()}
-                      {shippingCost === 0 && orderData.cartTotal >= shippingCosts.freeShippingThreshold && (
-                        <motion.span 
-                          className="block text-[#5da872] mt-2"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
-                        >
-                          ¡Felicidades! 🎉 Tu envío es gratis
-                        </motion.span>
-                      )}
-                    </p>
-                    <p className="text-base text-[#ffffff] leading-relaxed">
-                      Nos esforzamos por ofrecerte la mejor experiencia de envío 🚚💨
-                      {shippingCost > 0 && orderData.cartTotal < shippingCosts.freeShippingThreshold && (
-                        <motion.span 
-                          className="block mt-2"
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.8 }}
-                        >
-                          ¡Atención! 🎯 Por compras sobre ${shippingCosts.freeShippingThreshold.toLocaleString()}, 
-                          el envío es gratis dentro del anillo Américo Vespucio. ¡Estás cerca de lograrlo! 💪
-                        </motion.span>
-                      )}
-                    </p>
-                    {shippingCost > 0 && orderData.cartTotal < shippingCosts.freeShippingThreshold && (
-                      <motion.div 
-                        className="mt-6"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
-                      >
-                        <div className="w-full bg-[#676767] rounded-full h-3 mb-2 overflow-hidden">
-                          <motion.div 
-                            className="bg-[#5da872] h-3 rounded-full"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${(orderData.cartTotal / shippingCosts.freeShippingThreshold) * 100}%` }}
-                            transition={{ duration: 1, delay: 1.2 }}
-                          />
-                        </div>
-                        <p className="text-sm text-[#5da872] font-medium">
-                          Te faltan ${(shippingCosts.freeShippingThreshold - orderData.cartTotal).toLocaleString()} para envío gratis
-                        </p>
-                      </motion.div>
-                    )}
+                    {cartWeight <= 100 && (
+  <>
+    <p className="font-medium text-xl text-[#ffffff]">
+      Costo de envío: ${shippingCost.toLocaleString()}
+      {shippingCost === 0 && orderData.cartTotal >= shippingCosts.freeShippingThreshold && (
+        <motion.span 
+          className="block text-[#5da872] mt-2"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
+        >
+          ¡Felicidades! 🎉 Tu envío es gratis
+        </motion.span>
+      )}
+    </p>
+    <p className="text-base text-[#ffffff] leading-relaxed">
+      Nos esforzamos por ofrecerte la mejor experiencia de envío 🚚💨
+      {shippingCost > 0 && orderData.cartTotal < shippingCosts.freeShippingThreshold && (
+        <motion.span 
+          className="block mt-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+        >
+          ¡Atención! 🎯 Por compras sobre ${shippingCosts.freeShippingThreshold.toLocaleString()}, 
+          el envío es gratis dentro del anillo Américo Vespucio. ¡Estás cerca de lograrlo! 💪
+        </motion.span>
+      )}
+    </p>
+    {shippingCost > 0 && orderData.cartTotal < shippingCosts.freeShippingThreshold && (
+      <motion.div 
+        className="mt-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1 }}
+      >
+        <div className="w-full bg-[#676767] rounded-full h-3 mb-2 overflow-hidden">
+          <motion.div 
+            className="bg-[#5da872] h-3 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${(orderData.cartTotal / shippingCosts.freeShippingThreshold) * 100}%` }}
+            transition={{ duration: 1, delay: 1.2 }}
+          />
+        </div>
+        <p className="text-sm text-[#5da872] font-medium">
+          Te faltan ${(shippingCosts.freeShippingThreshold - orderData.cartTotal).toLocaleString()} para envío gratis
+        </p>
+      </motion.div>
+    )}
+  </>
+)}
                   </>
                 )}
               </motion.div>
