@@ -4,8 +4,16 @@ import { useState, useEffect } from 'react';
 import { shippingCosts } from '../../data/shipping-costs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Truck, ArrowRight, Package } from 'lucide-react';
+import {ShippingAdress} from '../Shipping/ShippingAdress'
+import LoadingSpinner from '../Ui/LoadingSpinner';
 
-export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, cartTotal }) {
+export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, cartTotal, shippingDetails, setShippingDetails, comunas, setComunas }) {
+
+  const amountForFreeShipping = shippingCosts.freeShippingThreshold - cartTotal;
+  const [showFreeShippingAlert, setShowFreeShippingAlert] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [billing, setBilling] = useState('')
+
   const [personalInfo, setPersonalInfo] = useState({
     type: 'personal',
     name: '',
@@ -14,12 +22,14 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
     // Campos para empresa
     businessName: '',
     businessRut: '',
+    businessBilling: "",
+    businessRegion: "",
+    businessComune: "",
     businessGiro: '', // Nuevo campo para el giro
     businessContact: '', // Nuevo campo para el nombre del contacto
     businessPhone: '', // Nuevo campo para el teléfono de la empresa
   });
-  const amountForFreeShipping = shippingCosts.freeShippingThreshold - cartTotal;
-  const [showFreeShippingAlert, setShowFreeShippingAlert] = useState(true);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,7 +45,16 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
     nextStep();
   };
 
+
+  if (loading) {
+    return <LoadingSpinner/>
+  }
+
+
   return (
+
+  
+
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -248,6 +267,8 @@ export default function PersonalInfoStep({ nextStep, prevStep, updateOrderData, 
             required
             placeholder="+569XXXXXXXX"
           />
+
+          <ShippingAdress  personalInfo={personalInfo} setPersonalInfo={setPersonalInfo} type={personalInfo.type} loading={loading} setLoading={setLoading} shippingDetails={shippingDetails} setShippingDetails={setShippingDetails} comunas={comunas} setComunas={setComunas} />
           <p className="text-sm text-gray-400 mt-1">
             Te llamaremos a este número cuando realicemos el envío de tu pedido
           </p>

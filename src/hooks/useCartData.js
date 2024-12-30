@@ -21,9 +21,9 @@ const useCartData = () => {
          return {
            items: mockCart.items.map(item => ({
              id: item.product_id,
+             product_id: item.product_id,
              name: item.data.name,
              price: parseFloat(item.data.price),
-             quantity: item.quantity,
              weight: parseFloat(item.data.weight || 0),
              subtotal: parseFloat(item.line_total),
              images: item.data.images.thumbnail,

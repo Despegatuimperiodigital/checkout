@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { CheckCircle } from 'lucide-react';
 
-export default function PurchaseDetails({ orderData }) {
+export default function PurchaseDetails({ orderData, payment }) {
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <motion.div 
@@ -45,7 +46,7 @@ export default function PurchaseDetails({ orderData }) {
           >
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-[#397e4c]">Número de Orden:</h2>
-              <span className="text-2xl text-[#397e4c]">{orderData.orderNumber}</span>
+              <span className="text-2xl text-[#397e4c]">{orderData.id}</span>
             </div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -65,17 +66,20 @@ export default function PurchaseDetails({ orderData }) {
               <div>
                 <h3 className="text-xl font-semibold mb-3 text-[#397e4c]">Detalles de envío:</h3>
                 <div className="space-y-1 text-[#222222]">
-                  <p>{orderData.personalInfo.name}</p>
-                  <p>{orderData.shipping.address}</p>
-                  <p>{orderData.shipping.commune}</p>
+                  <p>{orderData.billing.first_name} { orderData.billing.last_name}</p>
+                   {
+                    orderData.billing.address_1 ? <> <p>{orderData.billing.address_1}</p>
+                    <p>{orderData.shipping.address_2}</p> </> : <p>Retiro en tienda</p>
+                   }
+                 
                 </div>
               </div>
 
               <div>
                 <h3 className="text-xl font-semibold mb-3 text-[#397e4c]">Método de pago:</h3>
                 <div className="space-y-1 text-[#222222]">
-                  <p>Tarjeta de Crédito</p>
-                  <p>{orderData.payment.number}</p>
+                  <p>{orderData.payment_method_title}</p>
+                  <p>******{payment.card_detail.card_number}</p>
                 </div>
               </div>
             </motion.div>
@@ -87,7 +91,7 @@ export default function PurchaseDetails({ orderData }) {
             >
               <h3 className="text-xl font-semibold mb-4 text-[#397e4c]">Resumen de tu pedido:</h3>
               <div className="space-y-3">
-                {orderData.items.map((item, index) => (
+                {orderData.line_items.map((item, index) => (
                   <div key={index} className="flex justify-between">
                     <span>{item.name} x {item.quantity}</span>
                     <span>${(item.price * item.quantity).toLocaleString()}</span>
@@ -98,15 +102,15 @@ export default function PurchaseDetails({ orderData }) {
               <div className="border-t border-[#5da872] mt-4 pt-4">
                 <div className="flex justify-between mb-2">
                   <span>Subtotal:</span>
-                  <span>${orderData.cartTotal.toLocaleString()}</span>
+                  <span>${orderData.total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span>Envío:</span>
-                  <span>${orderData.shipping.cost.toLocaleString()}</span>
+                  <span>${orderData.shipping_total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-xl font-bold mt-2 text-[#397e4c]">
                   <span>Total:</span>
-                  <span>${(orderData.cartTotal + orderData.shipping.cost).toLocaleString()}</span>
+                  <span>${(orderData.total.toLocaleString())}</span>
                 </div>
               </div>
             </motion.div>

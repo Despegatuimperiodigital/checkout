@@ -4,34 +4,45 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PurchaseConfirmation from './PurchaseConfirmation';
 import PurchaseDetails from './PurchaseDetails';
+import { getOrder } from '../../utils/getOrder' 
+import { validatePayment } from '../../utils/validatePayment' 
+import DeclinedPayment from '../components/payment/DeclinedPayment';
 
 export default function CompraCompletada() {
   const [orderData, setOrderData] = useState(null);
   const [step, setStep] = useState(1);
+  const [payment, setPayment] = useState();
 
   useEffect(() => {
     // En una aplicación real, aquí obtendrías los datos de la orden desde el servidor
-    const exampleOrderData = {
-      orderNumber: '885078',
-      personalInfo: { name: 'Juan Pérez' },
-      shipping: { 
-        address: 'Calle Ejemplo 123', 
-        commune: 'Santiago', 
-        cost: 5000 
-      },
-      payment: { 
-        method: 'credit_card', 
-        number: '************1234' 
-      },
-      cartTotal: 75000,
-      items: [
-        { name: 'Producto 1', quantity: 2, price: 19990 },
-        { name: 'Producto 2', quantity: 1, price: 24990 },
-      ]
-    };
-    setOrderData(exampleOrderData);
+    // const exampleOrderData = {
+    //   orderNumber: '885078',
+    //   personalInfo: { name: 'Juan Pérez' },
+    //   shipping: { 
+    //     address: 'Calle Ejemplo 123', 
+    //     commune: 'Santiago', 
+    //     cost: 5000 
+    //   },
+    //   payment: { 
+    //     method: 'credit_card', 
+    //     number: '************1234' 
+    //   },
+    //   cartTotal: 75000,
+    //   items: [
+    //     { name: 'Producto 1', quantity: 2, price: 19990 },
+    //     { name: 'Producto 2', quantity: 1, price: 24990 },
+    //   ]
+    // };
+    // setOrderData(exampleOrderData);
 
     // Mostrar el segundo paso después de 3 segundos
+
+    
+
+    getOrder(setOrderData);
+    validatePayment(setPayment)
+
+
     const timer = setTimeout(() => {
       setStep(2);
     }, 3000);
@@ -39,8 +50,13 @@ export default function CompraCompletada() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!orderData) {
-    return <div>Cargando...</div>;
+  if (!orderData || !payment) {
+
+    return <div>Cargando...  </div>;
+  }
+
+  if (payment.response_code != 0) {
+    return <DeclinedPayment orderData={orderData} />
   }
 
   return (
@@ -55,7 +71,7 @@ export default function CompraCompletada() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
-              <PurchaseConfirmation orderNumber={orderData.orderNumber} />
+              <PurchaseConfirmation orderNumber={orderData.id} />
             </motion.div>
           )}
           {step === 2 && (
@@ -65,7 +81,7 @@ export default function CompraCompletada() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <PurchaseDetails orderData={orderData} />
+              <PurchaseDetails orderData={orderData} payment={payment} />
             </motion.div>
           )}
         </AnimatePresence>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
 
+
 export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
   const [paymentMethod, setPaymentMethod] = useState('woo_webpay');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -23,11 +24,13 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
       gateway: 'woomercadopago_custom'
     }
   ];
-  console.log(orderData)
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
     setErrors({});
+
 
     try {
       // Validate necessary data
@@ -38,84 +41,50 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
       const selectedMethod = paymentMethods.find(m => m.id === paymentMethod);
 
 
-      // Prepare order data for WooCommerce
-      const wooCommerceOrderData = {
-        payment_method: selectedMethod.gateway,
-        payment_method_title: selectedMethod.name,
-        set_paid: false,
-        billing: {
-          first_name: orderData.personalInfo.name.split(' ')[0],
-          last_name: orderData.personalInfo.name.split(' ').slice(1).join(' '),
-          address_1: orderData.shipping.address,
-          city: orderData.shipping.ws_comuna_name,
-          state: orderData.shipping.ws_region_name,
-          postcode: '',
-          country: 'CL',
-          email: orderData.email,
-          phone: orderData.personalInfo.phone,
-          tipo: orderData.personalInfo.type === 'personal' ? 'Boleta' : 'Factura',
-          rut: orderData.personalInfo.rut,
-          // Nuevos campos
-          razon_social: orderData.personalInfo.businessName || '',
-          rut_empresa: orderData.personalInfo.businessRut || '',
-          giro: orderData.personalInfo.businessGiro || '',
-          personal_rut: orderData.personalInfo.rut,
-          nombre_contacto: orderData.personalInfo.name || '', // Nombre de quien recibe
-          telefono_contacto: orderData.personalInfo.phone || '', // Teléfono de quien recibe
-        },
-        shipping: {
-          first_name: orderData.personalInfo.name.split(' ')[0],
-          last_name: orderData.personalInfo.name.split(' ').slice(1).join(' '),
-          address_1: orderData.shipping.address,
-          city: orderData.shipping.ws_comuna_name,
-          state: orderData.shipping.ws_region_name,
-          postcode: '',
-          country: 'CL'
-        },
-        line_items: orderData.cartItems.map(item => ({
-          product_id: item.id,
-          quantity: item.quantity
-        })),
-        shipping_lines: [
-          {
-            method_id: orderData.shipping.id,
-            method_title: orderData.shipping.shiping_method,
-            total: orderData.shipping.shipping_cost.toString()
-          }
-        ]
-      };
-
-      // Create order in WooCommerce
-      const consumerKey = 'ck_688c1f71bf9e218c6ecb582fde9725b3e08da3d9';
-      const consumerSecret = 'cs_f81a648e232d4467208162e18b89d8fdefbb0592';
-      const credentials = btoa(`${consumerKey}:${consumerSecret}`);
-
-      const response = await fetch('https://www.cruzeirogomas.cl/wp-json/wc/v3/orders', {
+      const response = await fetch('/api/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Basic ${credentials}`
         },
-        body: JSON.stringify(wooCommerceOrderData),
+        body: JSON.stringify({ orderData, selectedMethod }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || `Error creating order: ${response.status}`);
+        throw new Error(errorData.error || 'Error al crear la orden');
       }
-
+  
       const createdOrder = await response.json();
+     
+      if (createdOrder.id) {
 
-      // Get the payment URL from the WooCommerce response
-      const paymentUrl = createdOrder.payment_url;
-
-      if (!paymentUrl) {
-        throw new Error('No se pudo obtener la URL de pago');
+        try {
+          const response = await fetch('/api/webpay', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: 10000,
+              returnUrl: `${window.location.origin}/compra-completada?order_id=${createdOrder.id}`,
+            }),
+          });
+    
+          
+    
+          const data = await response.json();
+          console.log(data)
+          if (data.url) {
+            window.location.href = `${data.url}?token_ws=${data.token}`;
+          } else {
+            alert('Error al iniciar el pago.');
+          }
+        } catch (error) {
+          console.error(error);
+          alert('Error en la transacción.');
+        } finally {
+          setIsProcessing(false);
+        }
+        
       }
-
-      // Reemplazar checkout por finalizar-compra manteniendo los parámetros
-      const finalUrl = paymentUrl.replace('/checkout', '/finalizar-compra');
-      window.parent.location.href = finalUrl;
 
     } catch (error) {
       console.error('Error creating order:', error);
@@ -124,6 +93,10 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
       });
       setIsProcessing(false);
     }
+
+
+
+ 
   };
 
   return (
@@ -175,6 +148,16 @@ export default function PaymentStep({ prevStep, updateOrderData, orderData }) {
       >
         <h3 className="text-[#5da872] font-semibold text-lg mb-4">Confirma tus datos antes de proceder al pago:</h3>
         <div className="space-y-2 text-[#ffffff]">
+          {
+            orderData.personalInfo.type === 'business' && (
+              <>
+              <p><strong>Nombre de la empresa:</strong> {orderData.personalInfo.businessName}</p>
+              <p><strong>Rut Empresa:</strong> {orderData.personalInfo.businessRut}</p>
+              <p><strong>Giro Empresa:</strong> {orderData.personalInfo.businessGiro}</p>
+              <p><strong>Dirección de facturación:</strong> {orderData.personalInfo.businessBilling}, {orderData.personalInfo.businessComune}, {orderData.personalInfo.businessRegion} </p>
+              </>
+            )
+          }
           <p><strong>Nombre:</strong> {orderData.personalInfo.name}</p>
           <p><strong>Email:</strong> {orderData.email}</p>
           <p><strong>Teléfono:</strong> {orderData.personalInfo.phone}</p>

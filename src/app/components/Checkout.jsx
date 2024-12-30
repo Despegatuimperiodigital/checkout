@@ -23,6 +23,23 @@ export default function Checkout() {
     cartWeight: 0
   });
 
+  const [shippingDetails, setShippingDetails] = useState({
+    address: '',
+    region: '',
+    comuna: '',
+    additionalInfo: '',
+    type: 'delivery',
+    ws_region_name: '',
+    ws_region_id: '',
+    ws_comuna_name: '',
+    ws_comuna_id: '',
+    shipping_cost: 0,
+    shipping_method: ''
+  });
+
+  const [comunas, setComunas] = useState([]);
+
+
   const cartData = useCartData();
   console.log('Checkout - cartData:', cartData);
 
@@ -99,6 +116,10 @@ export default function Checkout() {
                         prevStep={prevStep}
                         updateOrderData={updateOrderData}
                         cartTotal={orderData.cartTotal}
+                        shippingDetails={shippingDetails}
+                        setShippingDetails={setShippingDetails}
+                        comunas={comunas}
+                        setComunas={setComunas}
                       />
                     </div>
                   )}
@@ -109,6 +130,10 @@ export default function Checkout() {
                         prevStep={prevStep}
                         updateOrderData={updateOrderData}
                         orderData={orderData}
+                        shippingDetails={shippingDetails}
+                        setShippingDetails={setShippingDetails}
+                        comunas={comunas}
+                        setComunas={setComunas}
                       />
                     </div>
                   )}
