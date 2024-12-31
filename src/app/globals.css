@@ -18,3 +18,43 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #397e4c;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 30px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #397e4c;
+  color: white;
+}
+
+.swiper-pagination-bullet {
+  background-color: #397e4c;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #5da872;
+}
+
+
+

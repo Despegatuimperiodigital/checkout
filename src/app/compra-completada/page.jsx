@@ -7,6 +7,7 @@ import PurchaseDetails from './PurchaseDetails';
 import { getOrder } from '../../utils/getOrder' 
 import { validatePayment } from '../../utils/validatePayment' 
 import DeclinedPayment from '../components/payment/DeclinedPayment';
+import LoadingSpinner from '../components/Ui/LoadingSpinner';
 
 export default function CompraCompletada() {
   const [orderData, setOrderData] = useState(null);
@@ -52,7 +53,7 @@ export default function CompraCompletada() {
 
   if (!orderData || !payment) {
 
-    return <div>Cargando...  </div>;
+    return <LoadingSpinner />
   }
 
   if (payment.response_code != 0) {

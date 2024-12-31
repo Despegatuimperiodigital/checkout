@@ -1,5 +1,10 @@
 import './globals.css'
 
+export const metadata = {
+  title: 'CruzeiroGomas',
+  description: 'Soluciones en pisos industriales y comerciales',
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="es">

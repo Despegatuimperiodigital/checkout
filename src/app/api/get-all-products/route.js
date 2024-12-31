@@ -13,14 +13,9 @@ import axios from 'axios';
 export async function GET(req) {  
 
     try {
-      const orderId = req.nextUrl.searchParams.get('orderId');
-
-      if (!orderId) {
-        return NextResponse.json({ error: 'El parámetro orderId es necesario.' }, { status: 400 });
-      }
 
         const {data} = await axios.get(
-            `https://www.cruzeirogomas.cl/wp-json/wc/v3/orders/${orderId}`,
+            `https://www.cruzeirogomas.cl/wp-json/wc/v3/products`,
             {
               headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +30,7 @@ export async function GET(req) {
     } catch (error) {
         if (error.response) {
             console.error('WooCommerce API Error:', error.response.data);
-            throw new Error(error.response.data.message || `Error creating order: ${error.response.status}`);
+            throw new Error(error.response.data.message || `Error getting products: ${error.response.status}`);
           } else if (error.request) {
             console.error('No response received from WooCommerce:', error.request);
             throw new Error('No response received from WooCommerce');
